@@ -311,6 +311,102 @@
       color: var(--dark-color);
       opacity: 0.7;
     }
+
+    /* View Toggle Button Styles */
+    .view-toggle {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      background-color: white;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      padding: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .view-toggle:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .toggle-option {
+      position: relative;
+      z-index: 2;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 24px;
+      text-decoration: none;
+    }
+
+    .toggle-option.active {
+      color: white;
+    }
+
+    .toggle-option:not(.active) {
+      color: var(--dark-color);
+      opacity: 0.7;
+    }
+
+    .toggle-option:not(.active):hover {
+      opacity: 1;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      height: calc(100% - 8px);
+      width: calc(50% - 4px);
+      background-color: var(--primary-color);
+      border-radius: 24px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1;
+    }
+
+    .toggle-slider.mobile {
+      transform: translateX(100%);
+    }
+
+    .toggle-icon {
+      display: inline-flex;
+    }
+
+    @media (max-width: 640px) {
+      .view-toggle {
+        top: 12px;
+        right: 12px;
+        transform: scale(0.9);
+      }
+      
+      .toggle-option {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .view-toggle {
+      animation: fadeInDown 0.5s ease-out forwards;
+    }
   </style>
 </head>
 <body>
@@ -325,6 +421,30 @@
       </div>
     </div>
   </header>
+  
+  <!-- View Toggle Button -->
+  <div class="view-toggle">
+    <div class="toggle-slider"></div>
+    <a href="https://rotonvai.github.io/learnn5bd-desktop/" class="toggle-option active" data-view="desktop">
+      <span class="toggle-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+      </span>
+      <span>Desktop</span>
+    </a>
+    <a href="https://rotonvai.github.io/learnn5bd/" class="toggle-option" data-view="mobile">
+      <span class="toggle-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+        </svg>
+      </span>
+      <span>Mobile</span>
+    </a>
+  </div>
   
   <main class="main">
     <div class="container">
@@ -492,5 +612,33 @@
       <p class="footer-text">&copy;2025 Hafizur R Manik. All rights reserved</p>
     </div>
   </footer>
+
+  <script>
+    // View Toggle Button Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleOptions = document.querySelectorAll('.toggle-option');
+      const toggleSlider = document.querySelector('.toggle-slider');
+      
+      toggleOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+          // Only handle the click if it's not already active
+          if (!this.classList.contains('active')) {
+            // Remove active class from all options
+            toggleOptions.forEach(opt => opt.classList.remove('active'));
+            
+            // Add active class to clicked option
+            this.classList.add('active');
+            
+            // Move the slider
+            if (this.dataset.view === 'mobile') {
+              toggleSlider.classList.add('mobile');
+            } else {
+              toggleSlider.classList.remove('mobile');
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
