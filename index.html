@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learn N5 Japanese</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/N5" href="N5.jpg">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-light: #4895ef;
+      --secondary-color: #3f37c9;
+      --accent-color: #f72585;
+      --dark-color: #1f1f1f;
+      --light-color: #ffffff;
+      --gray-light: #f8f9fa;
+      --gray-medium: #e9ecef;
+      --transition: all 0.3s ease;
+      
+      /* Category colors */
+      --kana-color: #43a047;
+      --vocab-color: #e53935;
+      --grammar-color: #fbc02d;
+      --kanji-color: #3f51b5;
+      --listening-color: #039be5;
+      --quiz-color: #5e35b1;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+    
+    .header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo-icon {
+      background-color: var(--primary-color);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .greeting {
+      font-size: 1rem;
+      color: var(--dark-color);
+      opacity: 0.8;
+    }
+    
+    .main {
+      flex: 1;
+      padding: 3rem 0;
+    }
+    
+    .page-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .title-text {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .subtitle-text {
+      font-size: 1.2rem;
+      color: var(--dark-color);
+      opacity: 0.8;
+      font-weight: 400;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 640px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    .card:active {
+      transform: scale(0.98);
+    }
+    
+    .card-header {
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 120px;
+    }
+    
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .card-header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .kana-header { background: linear-gradient(135deg, var(--kana-color), #66bb6a); }
+    .vocab-header { background: linear-gradient(135deg, var(--vocab-color), #ef5350); }
+    .grammar-header { background: linear-gradient(135deg, var(--grammar-color), #ffca28); }
+    .kanji-header { background: linear-gradient(135deg, var(--kanji-color), #5c6bc0); }
+    .listening-header { background: linear-gradient(135deg, var(--listening-color), #29b6f6); }
+    .quiz-header { background: linear-gradient(135deg, var(--quiz-color), #7e57c2); }
+    
+    .japanese {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: white;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--dark-color);
+    }
+    
+    .kana-title { color: var(--kana-color); }
+    .vocab-title { color: var(--vocab-color); }
+    .grammar-title { color: var(--grammar-color); }
+    .kanji-title { color: var(--kanji-color); }
+    .listening-title { color: var(--listening-color); }
+    .quiz-title { color: var(--quiz-color); }
+    
+    .card-description {
+      font-size: 0.95rem;
+      color: var(--dark-color);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+    
+    .card-footer {
+      padding: 0 1.5rem 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .card-button {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: var(--transition);
+    }
+    
+    .kana-button { color: var(--kana-color); }
+    .vocab-button { color: var(--vocab-color); }
+    .grammar-button { color: var(--grammar-color); }
+    .kanji-button { color: var(--kanji-color); }
+    .listening-button { color: var(--listening-color); }
+    .quiz-button { color: var(--quiz-color); }
+    
+    .card:hover .card-button {
+      gap: 0.5rem;
+    }
+    
+    .footer {
+      background: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.05);
+    }
+    
+    .footer-text {
+      color: var(--dark-color);
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+    
+    .progress-indicator {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    
+    .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--gray-medium);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+    
+    .kana-progress { background-color: var(--kana-color); width: 85%; }
+    .vocab-progress { background-color: var(--vocab-color); width: 60%; }
+    .grammar-progress { background-color: var(--grammar-color); width: 45%; }
+    .kanji-progress { background-color: var(--kanji-color); width: 30%; }
+    .listening-progress { background-color: var(--listening-color); width: 50%; }
+    .quiz-progress { background-color: var(--quiz-color); width: 70%; }
+    
+    .progress-text {
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+      white-space: nowrap;
+      color: var(--dark-color);
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="#" class="logo">
+          <span class="logo-icon">日</span>
+          <span>Japanese N5</span>
+        </a>
+        <div class="greeting">Welcome back, Khatom!</div>
+      </div>
+    </div>
+  </header>
+  
+  <main class="main">
+    <div class="container">
+      <div class="page-title">
+        <h1 class="title-text">Learn N5 Japanese</h1>
+        <p class="subtitle-text">basics of Japanese language from Minna No Nihongo</p>
+      </div>
+      
+      <div class="grid">
+        <!-- Kana Card -->
+        <a href="./Kana/Kana_index.html" class="card">
+          <div class="card-header kana-header">
+            <div class="japanese">かな</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title kana-title">Kana</h2>
+            <p class="card-description">Learn Hiragana and Katakana, the basic Japanese writing systems.</p>
+            <div class="progress-indicator">
+              <div class="progress-bar">
+                <div class="progress-fill kana-progress"></div>
+              </div>
+              <span class="progress-text">85%</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-button kana-button">
+              Start Learning
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Vocabulary Card -->
+        <a href="./Vocabulary/Vocabulary.html" class="card">
+          <div class="card-header vocab-header">
+            <div class="japanese">語彙</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title vocab-title">Vocabulary</h2>
+            <p class="card-description">Master essential words and phrases for everyday communication.</p>
+            <div class="progress-indicator">
+              <div class="progress-bar">
+                <div class="progress-fill vocab-progress"></div>
+              </div>
+              <span class="progress-text">60%</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-button vocab-button">
+              Start Learning
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Grammar Card -->
+        <a href="#grammar" class="card">
+          <div class="card-header grammar-header">
+            <div class="japanese">文法</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title grammar-title">Grammar</h2>
+            <p class="card-description">Learn sentence structures and patterns for proper Japanese.</p>
+            <div class="progress-indicator">
+              <div class="progress-bar">
+                <div class="progress-fill grammar-progress"></div>
+              </div>
+              <span class="progress-text">45%</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-button grammar-button">
+              Start Learning
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Kanji Card -->
+        <a href="#kanji" class="card">
+          <div class="card-header kanji-header">
+            <div class="japanese">漢字</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title kanji-title">Kanji</h2>
+            <p class="card-description">Study Japanese characters and their meanings and readings.</p>
+            <div class="progress-indicator">
+              <div class="progress-bar">
+                <div class="progress-fill kanji-progress"></div>
+              </div>
+              <span class="progress-text">30%</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-button kanji-button">
+              Start Learning
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Listening Card -->
+        <a href="#listening" class="card">
+          <div class="card-header listening-header">
+            <div class="japanese">▶</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title listening-title">Listening</h2>
+            <p class="card-description">Improve your comprehension with audio exercises and practice.</p>
+            <div class="progress-indicator">
+              <div class="progress-bar">
+                <div class="progress-fill listening-progress"></div>
+              </div>
+              <span class="progress-text">50%</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-button listening-button">
+              Start Learning
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        
+        <!-- Quiz Card -->
+        <a href="./Quiz/Quiz_index.html" class="card">
+          <div class="card-header quiz-header">
+            <div class="japanese">クイズ</div>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title quiz-title">Quiz</h2>
+            <p class="card-description">Test your knowledge and track your progress with interactive quizzes.</p>
+            <div class="progress-indicator">
+              <div class="progress-bar">
+                <div class="progress-fill quiz-progress"></div>
+              </div>
+              <span class="progress-text">70%</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-button quiz-button">
+              Start Learning
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">&copy;2025 Hafizur R Manik. All rights reserved</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>N5 Vocabulary Lesson 07</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/N5" href="/N5.jpg">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-light: #4895ef;
+      --secondary-color: #3f37c9;
+      --accent-color: #f72585;
+      --dark-color: #1f1f1f;
+      --light-color: #ffffff;
+      --gray-light: #f8f9fa;
+      --gray-medium: #e9ecef;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+    
+    .header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo-icon {
+      background-color: var(--primary-color);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .nav-link {
+      color: var(--dark-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary-color);
+    }
+    
+    .nav-link.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .main {
+      flex: 1;
+      padding: 3rem 0;
+    }
+    
+    .lesson-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .lesson-title {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .lesson-subtitle {
+      font-size: 1.2rem;
+      color: var(--dark-color);
+      opacity: 0.8;
+      font-weight: 400;
+    }
+    
+    .flashcard-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .flashcard-container {
+      perspective: 1000px;
+      width: 100%;
+      max-width: 600px;
+      height: 350px;
+      margin-bottom: 2rem;
+    }
+    
+    .flashcard {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+    
+    .flashcard-side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .flashcard-front {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+      color: white;
+    }
+    
+    .flashcard-front::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .flashcard-front::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .flashcard-back {
+      background: white;
+      color: var(--dark-color);
+      transform: rotateY(180deg);
+    }
+    
+    .japanese-text {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+    
+    .hint-text {
+      font-size: 1rem;
+      opacity: 0.7;
+      font-weight: 400;
+      margin-top: 1rem;
+    }
+    
+    .meaning-text {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .reading-text {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    
+    .example-text {
+      font-size: 1rem;
+      background: var(--gray-light);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .control-btn {
+      background: white;
+      border: none;
+      color: var(--dark-color);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .control-btn:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .progress-container {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 1rem;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--gray-medium);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-color);
+      width: 20%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--dark-color);
+      opacity: 0.7;
+    }
+    
+    .footer {
+      background: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: auto;
+    }
+    
+    .footer-text {
+      color: var(--dark-color);
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .flashcard-container {
+        height: 300px;
+      }
+      
+      .japanese-text {
+        font-size: 2.5rem;
+      }
+      
+      .meaning-text {
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .flashcard-container {
+        height: 250px;
+      }
+      
+      .japanese-text {
+        font-size: 2rem;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="#" class="logo">
+          <span class="logo-icon">日</span>
+          <span>Japanese N5</span>
+        </a>
+        <nav class="nav-links">
+          <a href="v_lesson6_index.html" class="nav-link">Lesson 06</a>
+          <a href="v_lesson7_index.html" class="nav-link active">Lesson 07</a>
+          <a href="v_lesson8_index.html" class="nav-link">Lesson 08</a>
+          <a href="Vocabulary.html" class="nav-link">All Lessons</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  
+  <main class="main">
+    <div class="container">
+      <div class="lesson-header">
+        <h1 class="lesson-title">N5 Vocabulary Lesson 07</h1>
+        <p class="lesson-subtitle">By Minna No Nihongo</p>
+      </div>
+      
+      <div class="flashcard-wrapper">
+        <div class="flashcard-container">
+          <div class="flashcard" id="flashcard">
+            <div class="flashcard-side flashcard-front">
+              <div class="japanese-text">おはよう</div>
+              <div class="hint-text">Click to reveal meaning</div>
+            </div>
+            <div class="flashcard-side flashcard-back">
+              <div class="meaning-text">Good Morning</div>
+              <div class="reading-text">Ohayou</div>
+              <div class="example-text">おはようございます。- Good morning (polite)</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="controls">
+          <button class="control-btn" id="prevBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Previous
+          </button>
+          <button class="control-btn" id="flipBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 2v6h-6"/>
+              <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+              <path d="M3 22v-6h6"/>
+              <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+            </svg>
+            Flip Card
+          </button>
+          <button class="control-btn" id="nextBtn">
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text">
+            <span>Card 1 of 10</span>
+            <span>20% Complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">© 2025 Hafizur R Manik. All Rights Reserved.</p>
+    </div>
+  </footer>
+  
+ <script>
+  const flashcard = document.getElementById('flashcard');
+  const flipBtn = document.getElementById('flipBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressFill = document.getElementById('progressFill');
+  const flashcardFront = flashcard.querySelector('.flashcard-front');
+  const flashcardBack = flashcard.querySelector('.flashcard-back');
+  const progressText = document.querySelector('.progress-text span:first-child');
+  const progressPercent = document.querySelector('.progress-text span:last-child');
+
+const flashcards = [
+  { japanese: 'きります', meaning: 'Cut, slice', reading: 'kirimasu', kanji: '切ります', bengali: 'কাটা, ছেঁড়া করা' },
+{ japanese: 'おくります', meaning: 'Send', reading: 'okurimasu', kanji: '送ります', bengali: 'পাঠানো' },
+{ japanese: 'あげます', meaning: 'Give', reading: 'agemasu', kanji: '上げます', bengali: 'দেওয়া' },
+{ japanese: 'もらいます', meaning: 'Receive', reading: 'moraimasu', kanji: '貰います', bengali: 'গ্রহণ করা' },
+{ japanese: 'かします', meaning: 'Lend', reading: 'kashimasu', kanji: '貸します', bengali: 'ধার দেওয়া' },
+{ japanese: 'かります', meaning: 'Borrow', reading: 'karimasu', kanji: '借ります', bengali: 'ধার নেওয়া, ঋণ করা' },
+{ japanese: 'おしえます', meaning: 'Teach', reading: 'oshiemasu', kanji: '教えます', bengali: 'শিক্ষা দেওয়া' },
+{ japanese: 'ならいます', meaning: 'Learn', reading: 'naraimasu', kanji: '習います', bengali: 'শেখা' },
+{ japanese: 'かけます（でんわを〜）', meaning: 'Make (a telephone call)', reading: 'kakemasu', kanji: '電話を〜', bengali: 'টেলিফোনে কথা বলা' },
+{ japanese: 'て', meaning: 'Hand, arm', reading: 'te', kanji: '手', bengali: 'হাত, বাহু' },
+{ japanese: 'はし', meaning: 'Chopsticks', reading: 'hashi', kanji: '箸', bengali: 'চপস্টিকস' },
+{ japanese: 'スプーン', meaning: 'Spoon', reading: 'supūn', kanji: '-', bengali: 'চামচ' },
+{ japanese: 'ナイフ', meaning: 'Knife', reading: 'naifu', kanji: '-', bengali: 'ছুরি' },
+{ japanese: 'フォーク', meaning: 'Fork', reading: 'fōku', kanji: '-', bengali: 'কাঁটা চামচ' },
+{ japanese: 'はさみ', meaning: 'Scissors', reading: 'hasami', kanji: '-', bengali: 'কাঁচি' },
+{ japanese: 'ファクス', meaning: 'Fax', reading: 'fakusu', kanji: '-', bengali: 'ফ্যাক্স' },
+{ japanese: 'ワープロ', meaning: 'Word processor', reading: 'wāpuro', kanji: '-', bengali: 'ওয়ার্ড প্রসেসর' },
+{ japanese: 'パソコン', meaning: 'Personal computer', reading: 'pasokon', kanji: '-', bengali: 'পার্সোনাল কম্পিউটার' },
+{ japanese: 'パンチ', meaning: 'Punch', reading: 'panchi', kanji: '-', bengali: 'পাঞ্চ মেশিন' },
+{ japanese: 'ホッチキス', meaning: 'Stapler', reading: 'hotchikisu', kanji: '-', bengali: 'স্ট্যাপলার' },
+{ japanese: 'セロテープ', meaning: 'Scotch tape', reading: 'serotēpu', kanji: '-', bengali: 'স্কচটেপ' },
+{ japanese: 'けしゴム', meaning: 'Eraser', reading: 'keshigomu', kanji: '消しゴム', bengali: 'রাবার' },
+{ japanese: 'かみ', meaning: 'Paper', reading: 'kami', kanji: '紙', bengali: 'কাগজ' },
+{ japanese: 'はな', meaning: 'Flower, blossom', reading: 'hana', kanji: '花', bengali: 'ফুল' },
+{ japanese: 'シャツ', meaning: 'Shirt', reading: 'shatsu', kanji: '-', bengali: 'শার্ট' },
+{ japanese: 'プレゼント', meaning: 'Gift, present', reading: 'purezento', kanji: '-', bengali: 'উপহার' },
+{ japanese: 'にもつ', meaning: 'Baggage, parcel', reading: 'nimotsu', kanji: '荷物', bengali: 'সামগ্রী, মালপত্র' },
+{ japanese: 'おかね', meaning: 'Money', reading: 'okane', kanji: 'お金', bengali: 'টাকা' },
+{ japanese: 'きっぷ', meaning: 'Ticket', reading: 'kippu', kanji: '切符', bengali: 'টিকিট' },
+{ japanese: 'クリスマス', meaning: 'Christmas', reading: 'kurisumasu', kanji: '-', bengali: 'বড়দিন' },
+{ japanese: 'ちち', meaning: 'My father', reading: 'chichi', kanji: '父', bengali: 'নিজের বাবা' },
+{ japanese: 'はは', meaning: 'My mother', reading: 'haha', kanji: '母', bengali: 'নিজের মা' },
+{ japanese: 'おとうさん', meaning: "Someone else's father", reading: 'otōsan', kanji: 'お父さん', bengali: 'অন্যের বাবা' },
+{ japanese: 'おかあさん', meaning: "Someone else's mother", reading: 'okāsan', kanji: 'お母さん', bengali: 'অন্যের মা' },
+{ japanese: 'もう', meaning: 'Already', reading: 'mō', kanji: '-', bengali: 'ইতিমধ্যে' },
+{ japanese: 'まだ', meaning: 'Not yet', reading: 'mada', kanji: '-', bengali: 'এখনও নয়' },
+{ japanese: 'これから', meaning: 'From now on, soon', reading: 'korekara', kanji: '-', bengali: 'এখন থেকে, শিগগির' },
+{ japanese: '[〜、]すてきですね', meaning: 'What a nice [〜]', reading: 'sutekidesune', kanji: '-', bengali: 'কি সুন্দর [〜]' },
+{ japanese: 'ごめんください', meaning: 'Excuse me. May I come in?', reading: 'gomenkudasai', kanji: '-', bengali: 'মাফ করবেন / ভিতরে আসতে পারি? / কেউ আছেন?' },
+{ japanese: 'いらっしゃい', meaning: 'How nice of you to come', reading: 'irasshai', kanji: '-', bengali: 'কি সুন্দর আগমন!' },
+{ japanese: 'どうぞ おあがりください', meaning: 'Do come in', reading: 'dōzo oagari kudasai', kanji: 'どうぞ お上がりください', bengali: 'ভিতরে আসুন' },
+{ japanese: 'しつれいします', meaning: 'Excuse me / May I?', reading: 'shitsureishimasu', kanji: '失礼します', bengali: 'আপনার অসুবিধা...? / আমি কি...? / ভদ্রতার সাথে আগমন বা প্রস্থান' },
+{ japanese: '[〜は]いかがですか', meaning: 'Won’t you have [〜]?', reading: 'ikaga desu ka', kanji: '-', bengali: 'আপনার কি নেবেন [〜]?' },
+{ japanese: 'いただきます', meaning: 'Thank you / I accept (before eating)', reading: 'itadakimasu', kanji: '-', bengali: 'ধন্যবাদ / খাওয়ার আগে বলা হয়' },
+{ japanese: 'りょこう', meaning: 'Trip, tour', reading: 'ryokou', kanji: '旅行', bengali: 'ভ্রমণ' },
+{ japanese: 'おみやげ', meaning: 'Souvenir, present', reading: 'omiyage', kanji: 'お土産', bengali: 'স্মৃতিচিহ্ন, উপহার' },
+{ japanese: 'ヨーロッパ', meaning: 'Europe', reading: 'Yōroppa', kanji: '-', bengali: 'ইউরোপ' },
+{ japanese: 'スペイン', meaning: 'Spain', reading: 'Supein', kanji: '-', bengali: 'স্পেন' },
+];
+
+
+  let currentCard = 0;
+
+  function updateFlashcard(index) {
+    const card = flashcards[index];
+    flashcardFront.innerHTML = `
+      <div class="japanese-text">${card.japanese}</div>
+      <div class="hint-text">Click to reveal meaning</div>
+    `;
+    flashcardBack.innerHTML = `
+      <div class="meaning-text">${card.meaning}</div>
+      <div class="reading-text">${card.reading}</div>
+      <div class="example-text">(${card.kanji}) - ${card.bengali}</div>
+    `;
+    progressFill.style.width = `${((index + 1) / flashcards.length) * 100}%`;
+    progressText.textContent = `Card ${index + 1} of ${flashcards.length}`;
+    progressPercent.textContent = `${Math.round(((index + 1) / flashcards.length) * 100)}% Complete`;
+  }
+
+  flipBtn.addEventListener('click', () => {
+    flashcard.classList.toggle('flipped');
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentCard > 0) {
+      currentCard--;
+      flashcard.classList.remove('flipped');
+      updateFlashcard(currentCard);
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentCard < flashcards.length - 1) {
+      currentCard++;
+      flashcard.classList.remove('flipped');
+      updateFlashcard(currentCard);
+    }
+  });
+  
+  // Initialize
+  updateFlashcard(currentCard);
+  // Also flip the card when clicking the card itself
+flashcard.addEventListener('click', () => {
+  flashcard.classList.toggle('flipped');
+});
+
+</script>
+</body>
+</html>
